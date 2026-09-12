@@ -32,9 +32,9 @@ function pick(){
   last=i;return colors[i];
 }
 if(tag){
-  tag.addEventListener("mouseenter",function(){document.body.style.background=pick()});
-  tag.addEventListener("mouseleave",function(){document.body.style.background=""});
-  tag.addEventListener("click",function(){document.body.style.background=pick()});
+  tag.addEventListener("mouseenter",function(){document.body.style.background=pick();tag.style.color="#fff"});
+  tag.addEventListener("mouseleave",function(){document.body.style.background="";tag.style.color=""});
+  tag.addEventListener("click",function(){document.body.style.background=pick();tag.style.color="#fff"});
 }
 
 /* pink block: bottom aligns with last index row; white name changes block color on hover */

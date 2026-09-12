@@ -50,6 +50,7 @@ main{display:flex;min-height:calc(100vh - 54px);padding-top:54px}
   padding:18px 20px 14px;
   border-bottom:1px solid var(--ink);
   display:block;
+  transition:background-color .3s ease,color .3s ease;
 }
 .idx-cell:hover{background:var(--ink);color:var(--paper)}
 .idx-top{
@@ -57,8 +58,13 @@ main{display:flex;min-height:calc(100vh - 54px);padding-top:54px}
   font-size:14px;
 }
 .idx-top .y{flex:none;width:64px}
-.idx-top .t{font-weight:400}
-.idx-cell.active .t{text-decoration:line-through;text-decoration-thickness:1px}
+.idx-top .t{
+  font-weight:400;
+  background-image:linear-gradient(currentColor,currentColor);
+  background-size:0% 1px;background-repeat:no-repeat;background-position:0 58%;
+  transition:background-size .4s ease;
+}
+.idx-cell:hover .t,.idx-cell.active .t{background-size:100% 1px}
 .idx-sub{
   margin-top:5px;padding-left:78px;
   font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.5;
@@ -115,6 +121,7 @@ main{display:flex;min-height:calc(100vh - 54px);padding-top:54px}
   padding:14px 18px;cursor:pointer;transition:opacity .15s;
 }
 .car-btn:hover{opacity:.3}
+.carousel.light .car-btn{color:#fff}
 .car-btn.prev{left:8px}
 .car-btn.next{right:8px}
 .car-count{
@@ -155,8 +162,9 @@ main{display:flex;min-height:calc(100vh - 54px);padding-top:54px}
 
 /* ===== name tag ===== */
 #nameTag{
-  position:fixed;left:22px;bottom:16px;z-index:5;
-  font-size:15px;letter-spacing:.02em;cursor:pointer;user-select:none;
+  position:fixed;right:22px;bottom:16px;z-index:5;
+  font-size:15px;letter-spacing:.06em;cursor:pointer;user-select:none;
+  transition:color .25s ease;
 }
 #nameTag span{opacity:.5}
 
