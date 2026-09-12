@@ -14,6 +14,7 @@ function applyLang(l){
   });
   if(toggle)toggle.textContent=l==="zh"?"EN":"中";
   try{localStorage.setItem("cw-lang",l)}catch(e){}
+  if(typeof alignPink==="function")alignPink();
 }
 if(toggle)toggle.addEventListener("click",function(){applyLang(lang==="en"?"zh":"en")});
 var saved=null;
@@ -31,18 +32,29 @@ function pick(){
   last=i;return colors[i];
 }
 if(tag){
-  tag.addEventListener("mouseenter",function(){
-    document.body.style.background=pick();
-    document.body.classList.add("colored");
-  });
-  tag.addEventListener("mouseleave",function(){
-    document.body.style.background="";
-    document.body.classList.remove("colored");
-  });
-  tag.addEventListener("click",function(){
-    document.body.style.background=pick();
-    document.body.classList.add("colored");
-  });
+  tag.addEventListener("mouseenter",function(){document.body.style.background=pick()});
+  tag.addEventListener("mouseleave",function(){document.body.style.background=""});
+  tag.addEventListener("click",function(){document.body.style.background=pick()});
+}
+
+/* pink block: bottom aligns with last index row; white name changes block color on hover */
+var pink=document.querySelector(".preview-pink");
+var pname=document.querySelector(".pink-name");
+function alignPink(){
+  if(!pink)return;
+  if(window.innerWidth<=900){pink.style.height="";return}
+  var col=document.querySelector(".index-col");
+  if(!col)return;
+  var cells=col.querySelectorAll(".idx-cell");
+  if(!cells.length)return;
+  var last=cells[cells.length-1];
+  pink.style.height=Math.max(last.offsetTop+last.offsetHeight-36,240)+"px";
+}
+window.addEventListener("load",alignPink);
+window.addEventListener("resize",alignPink);
+if(pname){
+  pname.addEventListener("mouseenter",function(){if(pink)pink.style.background=pick()});
+  pname.addEventListener("click",function(){if(pink)pink.style.background=pick()});
 }
 
 /* index row hover -> swap preview image over the pink block (home only) */
@@ -61,12 +73,14 @@ if(pv){
 
 /* carousel: prev/next arrows + counter */
 document.querySelectorAll(".carousel").forEach(function(car){
-  var imgs=car.querySelectorAll("img.ci");
+  var track=car.querySelector(".car-track");
+  if(!track)return;
+  var imgs=track.querySelectorAll("img");
   var count=car.querySelector(".car-count");
   var i=0,n=imgs.length;
   function show(k){
     i=(k+n)%n;
-    imgs.forEach(function(im,j){im.classList.toggle("on",j===i)});
+    track.style.transform="translateX(-"+(i*100)+"%)";
     if(count)count.textContent=(i+1)+" / "+n;
   }
   var bp=car.querySelector(".prev"),bn=car.querySelector(".next");
@@ -78,7 +92,7 @@ document.querySelectorAll(".carousel").forEach(function(car){
 var lb=document.getElementById("lightbox");
 if(lb){
   var lbImg=lb.querySelector("img");
-  document.querySelectorAll(".carousel img.ci").forEach(function(img){
+  document.querySelectorAll(".car-track img").forEach(function(img){
     img.addEventListener("click",function(){
       lbImg.src=img.src;lbImg.alt=img.alt||"";
       lb.classList.add("open");
