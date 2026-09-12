@@ -68,17 +68,17 @@ main{display:flex;min-height:calc(100vh - 54px)}
 
 /* ===== home ===== */
 .preview{
-  flex:1;display:flex;align-items:center;justify-content:center;
-  padding:36px;min-height:52vh;
+  flex:1;position:relative;min-height:52vh;padding:36px;
 }
-.preview img{
-  max-width:100%;max-height:62vh;object-fit:contain;
-  border:1px solid var(--ink);
+.preview-pink{
+  position:absolute;inset:36px;
+  background:#FF2D78;border:1px solid var(--ink);
 }
-.preview .placeholder{
-  width:100%;height:56vh;border:1px solid var(--ink);
-  display:flex;align-items:center;justify-content:center;
-  font-size:14px;letter-spacing:.2em;text-transform:uppercase;opacity:.35;
+#previewImg{
+  position:absolute;inset:36px;
+  width:calc(100% - 72px);height:calc(100% - 72px);
+  object-fit:contain;border:1px solid var(--ink);background:#fff;
+  display:none;
 }
 .home-foot{
   display:flex;justify-content:space-between;
@@ -89,11 +89,31 @@ main{display:flex;min-height:calc(100vh - 54px)}
 .home-foot a:hover{border-bottom:1px solid var(--ink)}
 
 /* ===== project page ===== */
-.proj{padding:36px 40px 120px}
-.hero{
-  width:100%;max-height:64vh;object-fit:contain;
-  border:1px solid var(--ink);margin-bottom:44px;cursor:zoom-in;
+.carousel{
+  position:relative;border:1px solid var(--ink);background:#fff;
+  aspect-ratio:1.42/1;max-height:66vh;margin-bottom:44px;
 }
+.carousel img.ci{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:contain;padding:10px;
+  opacity:0;transition:opacity .25s ease;pointer-events:none;
+}
+.carousel img.ci.on{opacity:1;pointer-events:auto;cursor:zoom-in}
+.car-btn{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:2;
+  background:var(--paper);border:1px solid var(--ink);
+  font-family:var(--sans);font-size:18px;line-height:1;
+  padding:8px 14px;cursor:pointer;
+}
+.car-btn:hover{background:var(--ink);color:var(--paper)}
+.car-btn.prev{left:14px}
+.car-btn.next{right:14px}
+.car-count{
+  position:absolute;right:14px;bottom:12px;z-index:2;
+  font-size:12px;background:var(--paper);border:1px solid var(--ink);
+  padding:2px 8px;
+}
+.proj{padding:36px 40px 120px}
 .cols{
   display:grid;grid-template-columns:480px 1fr;gap:0 48px;align-items:start;margin-bottom:60px;
 }
@@ -163,5 +183,5 @@ body.colored #nameTag{background:transparent;border-color:currentColor}
   .cols{grid-template-columns:1fr;gap:0}
   .cols .desc{margin-top:26px}
   .preview{padding:20px;min-height:0}
-  .preview .placeholder{height:40vh}
+  .preview-pink,#previewImg{inset:20px;width:calc(100% - 40px);height:auto;min-height:38vh}
 }
